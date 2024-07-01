@@ -28,21 +28,20 @@ public class SpringSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/register/**").permitAll()
-                    .antMatchers("/index").permitAll()
-                    .antMatchers("/users").hasRole("ADMIN")
-                    .anyRequest().authenticated()
+                .antMatchers("/register/**", "/index", "/login", "/resources/**").permitAll() // Added /login and /resources/**
+                .antMatchers("/home").authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .loginProcessingUrl("/login")
-                    .defaultSuccessUrl("/users", true)
-                    .permitAll()
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/home", true)
+                .permitAll()
                 .and()
                 .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login?logout")
-                    .permitAll();
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout")
+                .permitAll();
         return http.build();
     }
 
