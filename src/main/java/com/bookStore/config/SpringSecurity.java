@@ -28,7 +28,7 @@ public class SpringSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/register/**", "/index", "/login", "/resources/**").permitAll() // Added /login and /resources/**
+                .antMatchers("/register", "/index", "/login", "/resources/**").permitAll()
                 .antMatchers("/home").authenticated()
                 .anyRequest().authenticated()
                 .and()
